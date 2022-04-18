@@ -43,22 +43,22 @@ export function generateInternalBoxesNeeded(
 
   // inital box
   let box = getCopy({
-    min: { x: 0, y: 0, z: 0 },
-    max: { x: 0, y: 0, z: 0 },
+    min: min,
+    max: max,
   });
 
   // for each z in forach x foreach y
   for (let z = 0; z < numberOfBoxes.z; z++) {
-    box.max.z = z + 1;
-    box.min.z = z;
+    box.max.z = box.max.z + z + 1;
+    box.min.z = box.min.z + z;
 
     for (let x = 0; x < numberOfBoxes.x; x++) {
-      box.max.x = x + 1;
-      box.min.x = x;
+      box.max.x = box.max.x + x + 1;
+      box.min.x = box.min.x + x;
 
       for (let y = 0; y < numberOfBoxes.y; y++) {
-        box.max.y = y + 1;
-        box.min.y = y;
+        box.max.y = box.max.y + y + 1;
+        box.min.y = box.min.y + y;
         box = getCopy(box);
         addSizeToBoundingBox(box);
       }
