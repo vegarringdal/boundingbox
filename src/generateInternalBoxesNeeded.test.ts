@@ -21,15 +21,34 @@ Deno.test("generateBoundingBox1", () => {
   ]);
 });
 
-Deno.test("generateBoundingBox1", () => {
-  const bbox = generateBoundingBox([2, 2, 2, 1, 1, 1]);
-  const result = generateInternalBoxesNeeded(bbox.max, bbox.min, 1);
+Deno.test("generateBoundingBox2", () => {
+  const bbox = generateBoundingBox([2, 2, 2, 0, 0, 0]);
+  const result = generateInternalBoxesNeeded(bbox.max, bbox.min, 2);
   assertEquals(result, [
     {
       max: {
         x: 2,
         y: 2,
         z: 2,
+      },
+      min: {
+        x: 0,
+        y: 0,
+        z: 0,
+      },
+    },
+  ]);
+});
+
+Deno.test("generateBoundingBox3", () => {
+  const bbox = generateBoundingBox([2, 2, 2, 1, 1, 1]);
+  const result = generateInternalBoxesNeeded(bbox.max, bbox.min, 2);
+  assertEquals(result, [
+    {
+      max: {
+        x: 3,
+        y: 3,
+        z: 3,
       },
       min: {
         x: 1,

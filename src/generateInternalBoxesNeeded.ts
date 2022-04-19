@@ -23,7 +23,7 @@ export function generateInternalBoxesNeeded(
   // helper to generate a copy
   function getCopy(box: Box3) {
     return {
-      min: { x: box.min.x, y: box.min.y, z: box.min.x },
+      min: { x: box.min.x, y: box.min.y, z: box.min.z },
       max: { x: box.max.x, y: box.max.y, z: box.max.z },
     };
   }
@@ -38,27 +38,34 @@ export function generateInternalBoxesNeeded(
     boxCopy.max.x = boxCopy.max.x * size;
     boxCopy.max.y = boxCopy.max.y * size;
     boxCopy.max.z = boxCopy.max.z * size;
+
+    boxCopy.min.x = boxCopy.min.x + min.x;
+    boxCopy.min.y = boxCopy.min.y + min.y;
+    boxCopy.min.z = boxCopy.min.z + min.z;
+    boxCopy.max.x = boxCopy.max.x + min.x;
+    boxCopy.max.y = boxCopy.max.y + min.y;
+    boxCopy.max.z = boxCopy.max.z + min.z;
     boxes.push(boxCopy);
   }
 
   // inital box
   let box = getCopy({
-    min: min,
-    max: max,
+    min: { x: 0, y: 0, z: 0 },
+    max: { x: 0, y: 0, z: 0 },
   });
 
   // for each z in forach x foreach y
   for (let z = 0; z < numberOfBoxes.z; z++) {
-    box.max.z = box.max.z + z + 1;
-    box.min.z = box.min.z + z;
+    box.max.z = z + 1;
+    box.min.z = z;
 
     for (let x = 0; x < numberOfBoxes.x; x++) {
-      box.max.x = box.max.x + x + 1;
-      box.min.x = box.min.x + x;
+      box.max.x = x + 1;
+      box.min.x = x;
 
       for (let y = 0; y < numberOfBoxes.y; y++) {
-        box.max.y = box.max.y + y + 1;
-        box.min.y = box.min.y + y;
+        box.max.y = y + 1;
+        box.min.y = y;
         box = getCopy(box);
         addSizeToBoundingBox(box);
       }
