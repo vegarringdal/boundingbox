@@ -10,6 +10,8 @@ type bb = {
   min: BoundingBoxMaxMin;
 };
 
+// this one will need a lot more work..
+// Im thinking all wrong..
 export function intersectCheck(a: bb, b: bb) {
   const x =
     (a.max.x >= b.max.x && a.min.x <= b.max.x) ||
